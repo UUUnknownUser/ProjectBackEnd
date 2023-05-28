@@ -1,7 +1,10 @@
 package com.henry.joblisting.controller;
 
-import com.henry.joblisting.PostRepository;
+import com.henry.joblisting.repository.PostRepository;
+
 import com.henry.joblisting.model.Post;
+import com.henry.joblisting.repository.SearchRepository;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,11 @@ public class PostController {
 
     @Autowired
     PostRepository repo;
+
+    @Autowired
+    SearchRepository srepo;
+
+
     @ApiIgnore
     @RequestMapping(value="/")
     @CrossOrigin("*")
@@ -38,16 +46,25 @@ public class PostController {
         return repo.save(post);
     }
 
-    @GetMapping ("/posts/{_id}")
+    @GetMapping ("/post/{_id}")
     @CrossOrigin("*")
     public Optional<Post> updatePost( @PathVariable String _id)
     {return  repo.findById(_id);}
 
+    @GetMapping ("/posts/{text}")
+    @CrossOrigin("*")
+    public List<Post> search(@PathVariable String text)
+    {
+        return srepo.findByText(text);
+    }
+
     @DeleteMapping  ("/delposts/{_id}")
+    @CrossOrigin("*")
     public void deletePost(@PathVariable String _id)
     {repo.deleteById(_id);}
 
     @PutMapping  ("/updateposts/{_id}")
+    @CrossOrigin("*")
     public Post updatePost(@RequestBody Post post, @PathVariable String _id)
     {
         Post existingPost = repo.findById(_id).get();
