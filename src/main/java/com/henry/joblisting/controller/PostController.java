@@ -48,7 +48,7 @@ public class PostController {
 
     @GetMapping ("/post/{_id}")
     @CrossOrigin("*")
-    public Optional<Post> updatePost( @PathVariable String _id)
+    public Optional<Post> findSinglePostById( @PathVariable String _id)
     {return  repo.findById(_id);}
 
     @GetMapping ("/posts/{text}")

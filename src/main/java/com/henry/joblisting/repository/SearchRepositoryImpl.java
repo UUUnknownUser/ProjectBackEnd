@@ -39,6 +39,7 @@ public class SearchRepositoryImpl implements SearchRepository {
 
                                 new Document("query", text).append("path", Arrays.asList("profile", "desc", "techs")))),
                         new Document("$sort", new Document("exp", 1L))
+
                                                                                 ));
 
         result.forEach(doc -> posts.add(converter.read(Post.class, doc)));
